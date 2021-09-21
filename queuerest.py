@@ -18,39 +18,26 @@ def InsertIntoQueue(data):
 
 def popDataFromQueue():
     if(len(queue) != 0): 
-        print("poped element : " + queue.pop(0))
+        # print("poped element : " + queue.pop(0))
+        os.system(queue.pop(0))
     else:
         print('empty list')
 #End Queue operations
 
 print("Handling API Request")
 url = 'http://localhost/rmlowweb/test.php'
-myobj = {'api_key': '1'}
+myobj = {'api_key': '3'}
 
 x = requests.post(url, data = myobj)
-
-def convert(lst):
-    return ([i for item in lst for i in item.split()])
-
-lst = [x.text]
-con_list = convert(lst)
-
+err_code = InsertIntoQueue(x.text)
 print("--------------------------------------------------")
 print("--------------------------------------------------")
-print("Testing insertion upto the max limit")
-for j in range(0,len(con_list)):
-    err_code = InsertIntoQueue(con_list[j])
-    if err_code == 0:
-        break
-print("--------------------------------------------------")
-print("--------------------------------------------------")
+print(len(queue))
 print("Removal test of the queue until the last 2 element")
-for i in range(0, len(queue) - 2):
+for i in range(0, len(queue)):
     popDataFromQueue()
 
 print("--------------------------------------------------")
 print("--------------------------------------------------")
 print('Printing the rest of the element in the queue')
 print(queue)
-
-os.system('python invoke.py -o 1')
